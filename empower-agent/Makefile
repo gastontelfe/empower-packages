@@ -10,7 +10,7 @@ include $(TOPDIR)/rules.mk
 PKG_NAME:=empower-agent
 PKG_VERSION:=20150730
 PKG_RELEASE:=1
-PKG_REV:=628e65d14cfa7ad0acbee1496a3a8baf94c7cf0e
+PKG_REV:=f0f9a29c824ad8bab2e2472151bd8f64c7bcb09e
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=git@github.com:rriggio/empower-agent.git

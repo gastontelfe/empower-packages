@@ -165,6 +165,9 @@ start() {
     # add virtual ap interface to bridge
     ovs-vsctl add-port $BRIDGE $INTERFACE
 
+    # set the controller                                
+    ovs-vsctl set-controller $BRIDGE tcp:$MASTER_IP:6633
+
 }
 
 stop_click() {
