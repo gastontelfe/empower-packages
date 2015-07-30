@@ -135,7 +135,7 @@ start() {
     [ $NO_STATS == 1 ] && OPTS="$OPTS -c"
     [ $NO_SIGNALLING_STATS == 1 ] && OPTS="$OPTS -b"
 
-    empower_config.sh -a "$MASTER_IP" -p "$MASTER_PORT" -i "$IFNAMES" -f "$DEBUGFS" -v "$INTERFACE" $OPTS > /tmp/empower.click 2>&1
+    empower_config.sh -o "$BRIDGE" -a "$MASTER_IP" -p "$MASTER_PORT" -i "$IFNAMES" -f "$DEBUGFS" -v "$INTERFACE" $OPTS > /tmp/empower.click 2>&1
 
     # generate aligned version
     /usr/bin/click-align /tmp/empower.click > /tmp/empower.aligned.click

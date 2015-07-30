@@ -30,6 +30,7 @@
 # NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+BRIDGE=
 MASTER_IP=
 MASTER_PORT=
 IFNAMES=
@@ -42,13 +43,15 @@ NO_RX_STATS=0
 NO_SIGNALLING_STATS=0
 
 usage() {
-    echo "Usage: $0 -a <MASTER_IP> -p <MASTER_PORT> -i <IFNAMES> -f <DEBUGFS> -v <VIRTUAL_IFNAME> [-d -s -r -c -b]"
+    echo "Usage: $0 -o <BRIDGE> -a <MASTER_IP> -p <MASTER_PORT> -i <IFNAMES> -f <DEBUGFS> -v <VIRTUAL_IFNAME> [-d -s -r -c -b]"
     exit 1
 }
 
-while getopts "hsrcbda:p:i:f:v:" OPTVAL
+while getopts "o:hsrcbda:p:i:f:v:" OPTVAL
 do
     case $OPTVAL in
+    o) BRIDGE="$OPTARG"
+      ;;
     a) MASTER_IP="$OPTARG"
       ;;
     p) MASTER_PORT="$OPTARG"
@@ -103,6 +106,7 @@ for IFNAME in $IFNAMES; do
 
 done
 
+OVS_DPID=$(/sbin/ifconfig $BRIDGE 2>&1 | sed -n 's/^.*HWaddr \([0-9A-Za-z\:]*\).*/\1/p')
 DPID=$(echo $HWADDRS | awk '{print $1;}')
 
 UNIQUE=$(echo "$SUPPORTED_CHANNELS" | tr ' ' '\n' | sort -u -k2 | sort -n )
@@ -265,6 +269,7 @@ if [ $NO_SIGNALLING_STATS == 0 ]; then
 fi
 
 echo """    -> el :: EmpowerLVAPManager(HWADDRS \"$HWADDRS\",
+                                OVS_DPID $OVS_DPID,
                                 DPID $DPID,
                                 EBS ebs,
                                 EAUTHR eauthr,
