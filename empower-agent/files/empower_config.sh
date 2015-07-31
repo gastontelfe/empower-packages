@@ -106,8 +106,7 @@ for IFNAME in $IFNAMES; do
 
 done
 
-OVS_DPID=$(/sbin/ifconfig $BRIDGE 2>&1 | sed -n 's/^.*HWaddr \([0-9A-Za-z\:]*\).*/\1/p')
-DPID=$(echo $HWADDRS | awk '{print $1;}')
+WTP=$(/sbin/ifconfig $BRIDGE 2>&1 | sed -n 's/^.*HWaddr \([0-9A-Za-z\:]*\).*/\1/p')
 
 UNIQUE=$(echo "$SUPPORTED_CHANNELS" | tr ' ' '\n' | sort -u -k2 | sort -n )
 RE_STRING=""
@@ -269,8 +268,7 @@ if [ $NO_SIGNALLING_STATS == 0 ]; then
 fi
 
 echo """    -> el :: EmpowerLVAPManager(HWADDRS \"$HWADDRS\",
-                                OVS_DPID $OVS_DPID,
-                                DPID $DPID,
+                                WTP $WTP,
                                 EBS ebs,
                                 EAUTHR eauthr,
                                 EASSOR eassor,

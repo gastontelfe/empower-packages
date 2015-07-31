@@ -168,6 +168,17 @@ start() {
     # set the controller                                
     ovs-vsctl set-controller $BRIDGE tcp:$MASTER_IP:6633
 
+    # set port id
+    PORT_ID=$(ovs-ofctl show $BRIDGE | sed -n 's/\([0-9]*\)($INTERFACE: addr:\([0-9A-Za-z\:]*\).*/\1/p')
+    read_handler el.port_id $PORT_ID
+
+    # set hwaddr
+    HWADDR=$(ovs-ofctl show $BRIDGE | sed -n 's/\([0-9]*\)($INTERFACE: addr:\([0-9A-Za-z\:]*\).*/\2/p')
+    read_handler el.hwaddr $HWADDR
+
+    # iface
+    read_handler el.iface $INTERFACE
+
 }
 
 stop_click() {
