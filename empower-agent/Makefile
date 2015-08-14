@@ -8,9 +8,9 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=empower-agent
-PKG_VERSION:=20150813
+PKG_VERSION:=20150814
 PKG_RELEASE:=1
-PKG_REV:=991c5d606bf7fb4de9bc2d60d5ed22ad8213a01b
+PKG_REV:=a35fae27a5ff3e36761c9444a4ff60949df7e9db
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=git@github.com:rriggio/empower-agent.git
