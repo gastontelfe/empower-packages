@@ -253,7 +253,7 @@ switch_data[$IDX]
 done
 
 echo """FromHost($VIRTUAL_IFNAME)
-  -> EmpowerWifiEncap(EL el,"""
+  -> wifi_encap :: EmpowerWifiEncap(EL el,"""
 
 if [ $NO_STATS == 1 ]; then
 	echo "                      NO_STATS true,"
@@ -296,7 +296,7 @@ fi
 echo """    -> ctrl;
 
   wifi_cl [0]
-    -> EmpowerWifiDecap(EL el,"""
+    -> wifi_decap :: EmpowerWifiDecap(EL el,"""
 
 if [ $NO_STATS == 1 ]; then
 	echo "                      NO_STATS true,"
@@ -304,6 +304,8 @@ fi
 
 echo """                        DEBUG $DEBUG)
     -> ToHost($VIRTUAL_IFNAME);
+
+  wifi_decap [1] -> wifi_encap;
 
   wifi_cl [1]
     -> mgt_cl :: Classifier(0/40%f0,  // probe req
