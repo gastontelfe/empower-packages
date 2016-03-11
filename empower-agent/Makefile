@@ -62,7 +62,6 @@ define Build/Compile
 		$(STAGING_DIR_HOST)/bin/click-mkmindriver -p $(PKG_NAME) -C $(STAGING_DIR_HOST) \
 		-f $(PKG_BUILD_DIR)/elements/empower/samples/empower.click \
 		-A --all -E Discard -E Print -E PrintWifi -E Strip -E Null -e SetTXRate -e SetTXRateHT \
-		-E EmpowerPowerSaveBuffer; \
 	);
 	$(call Build/Install/Default, MINDRIVER=$(PKG_NAME) install)
 endef
