@@ -13,7 +13,7 @@ PKG_RELEASE:=1
 PKG_REV:=7ab1205003d9b09f435407d38ebae57d2ac834c0
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
-PKG_SOURCE_URL:=https://github.com/rriggio/empower-agent.git
+PKG_SOURCE_URL:=https://github.com/gastontelfe/empower-agent.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 PKG_SOURCE_VERSION:=$(PKG_REV)
 PKG_SOURCE_PROTO:=git
