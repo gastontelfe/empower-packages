@@ -147,6 +147,7 @@ echo """  rate_control :: SetTXRateHT(OFFSET 4, MCS 7);
 echo """
 };
 
+rates :: AvailableRates(DEFAULT 2 4 11 22 12 18 24 36 48 72 96 108);
 rates_ht :: AvailableRates(DEFAULT 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15);
 """
 
@@ -173,13 +174,13 @@ echo """  rate_control :: SetTXRate(OFFSET 4, RATE 108);
 
 echo """
 };
+
+rates :: AvailableRates(DEFAULT 12 18 24 36 48 72 96 108);
 """
 
 fi
 
-echo """rates :: AvailableRates(DEFAULT 12 18 24 36 48 72 96 108);
-
-re :: EmpowerResourceElements($RE_STRING);
+echo """re :: EmpowerResourceElements($RE_STRING);
 
 ControlSocket(\"TCP\", 7777);"""
 
@@ -252,7 +253,7 @@ switch_data[$IDX]
 done
 
 echo """FromHost($VIRTUAL_IFNAME)
-  -> EmpowerWifiEncap(EL el,"""
+  -> wifi_encap :: EmpowerWifiEncap(EL el,"""
 
 if [ $NO_STATS == 1 ]; then
 	echo "                      NO_STATS true,"
@@ -295,7 +296,7 @@ fi
 echo """    -> ctrl;
 
   wifi_cl [0]
-    -> EmpowerWifiDecap(EL el,"""
+    -> wifi_decap :: EmpowerWifiDecap(EL el,"""
 
 if [ $NO_STATS == 1 ]; then
 	echo "                      NO_STATS true,"
@@ -303,6 +304,8 @@ fi
 
 echo """                        DEBUG $DEBUG)
     -> ToHost($VIRTUAL_IFNAME);
+
+  wifi_decap [1] -> wifi_encap;
 
   wifi_cl [1]
     -> mgt_cl :: Classifier(0/40%f0,  // probe req
