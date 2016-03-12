@@ -48,12 +48,12 @@ append_ifname() {
     local CHANNEL
 
     logger -t "$NAME" "Checking interface $1."
-    
+
     # fetch wifi parameters
     config_load wireless
     config_get IFNAME $1 ifname
     config_get MODE $1 mode
-    
+
     [ "x$IFNAME" = "x" ] && {
         logger -t "$NAME" "Interface $IFNAME not available."
         return 0
@@ -75,7 +75,7 @@ append_ifname() {
 
     config_get DEVICE $1 device
     config_get CHANNEL $DEVICE channel "0"
-    config_get HTMODE $DEVICE htmode 
+    config_get HTMODE $DEVICE htmode
 
     [ "$CHANNEL" = "0" -o "$CHANNEL" = "auto" ] && {
         logger -t "$NAME" "Channel not specified for interface $IFNAME. Ignoring."
@@ -119,6 +119,7 @@ start() {
     # fetch network parameters
     config_load network
     config_get BRIDGE $NETWORK ifname
+    BRIDGE = "br-ovs"
 
     # generate click config
     logger -t "$NAME" "ip: $MASTER_IP"
@@ -165,7 +166,7 @@ start() {
     # add virtual ap interface to bridge
     ovs-vsctl add-port $BRIDGE $INTERFACE
 
-    # set the controller                                
+    # set the controller
     ovs-vsctl set-controller $BRIDGE tcp:$MASTER_IP:6633
 
     # set ports
@@ -191,9 +192,9 @@ stop() {
     # fetch network parameters
     config_load network
     config_get BRIDGE $NETWORK ifname
+    BRIDGE = "br-ovs"
     # del virtual ap interface from bridge
     ovs-vsctl del-port $BRIDGE $INTERFACE
     # stop click
     stop_click
 }
-

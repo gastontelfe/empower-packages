@@ -61,7 +61,7 @@ define Build/Compile
 	(cd $(PKG_BUILD_DIR)/userlevel; \
 		$(STAGING_DIR_HOST)/bin/click-mkmindriver -p $(PKG_NAME) -C $(STAGING_DIR_HOST) \
 		-f $(PKG_BUILD_DIR)/elements/empower/samples/empower.click \
-		-A --all -E Discard -E Print -E PrintWifi -E Strip -E Null -e SetTXRate -e SetTXRateHT \
+		-A --all -E Discard -E Print -E PrintWifi -E Strip -E Null -E ChatterSocket -e SetTXRate -e SetTXRateHT \
 		-E EmpowerPowerSaveBuffer; \
 	);
 	$(call Build/Install/Default, MINDRIVER=$(PKG_NAME) install)
@@ -74,7 +74,7 @@ define Package/empower-agent/install
 	$(INSTALL_DIR) $(1)/etc/config/
 	$(CP) ./files/empower.config $(1)/etc/config/empower
 	$(INSTALL_BIN) ./files/empower.init $(1)/etc/init.d/empower
-	$(INSTALL_BIN) ./files/empower_config.sh $(1)/usr/bin/empower_config.sh 
+	$(INSTALL_BIN) ./files/empower_config.sh $(1)/usr/bin/empower_config.sh
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/conf/wifi/write_handler $(1)/usr/bin/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/conf/wifi/read_handler $(1)/usr/bin/
 	$(CP) $(PKG_INSTALL_DIR)/usr/bin/$(PKG_NAME)click $(1)/usr/bin/click
@@ -84,4 +84,3 @@ endef
 
 $(eval $(call HostBuild))
 $(eval $(call BuildPackage,empower-agent))
-
