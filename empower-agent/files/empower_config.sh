@@ -181,6 +181,8 @@ echo """rates :: AvailableRates(DEFAULT 12 18 24 36 48 72 96 108);
 
 re :: EmpowerResourceElements($RE_STRING);
 
+ChatterSocket(\"TCP\", 7778);
+
 ControlSocket(\"TCP\", 7777);"""
 
 if [ $NO_RX_STATS == 0 ]; then
